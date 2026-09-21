@@ -12,9 +12,9 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <commctrl.h>
-#else
-#include "WDL/swell/swell.h"
 #endif
+// on Windows this only provides the SWELLAPP_* constants used by SWELLAppMain() below
+#include "WDL/swell/swell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
