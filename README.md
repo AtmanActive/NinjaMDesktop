@@ -1,2 +1,2 @@
 # NinjaMDesktop
-Cockos NINJAM packaged as a standalone desktop app
+Cockos [NINJAM](https://www.ninjam.com) packaged as a standalone desktop app
