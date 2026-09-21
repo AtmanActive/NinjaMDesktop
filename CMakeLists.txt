@@ -85,6 +85,15 @@ set(REANINJAM_SOURCES
   ${WDL_DIR}/rng.cpp
   ${WDL_DIR}/wingui/wndsize.cpp
   ${WDL_DIR}/wingui/scrollbar/coolscroll.cpp
+  # LICE (Cockos' bitmap library): used by coolscroll on all platforms and by SWELL on Linux
+  ${WDL_DIR}/lice/lice.cpp
+  ${WDL_DIR}/lice/lice_arc.cpp
+  ${WDL_DIR}/lice/lice_colorspace.cpp
+  ${WDL_DIR}/lice/lice_line.cpp
+  ${WDL_DIR}/lice/lice_text.cpp
+  ${WDL_DIR}/lice/lice_textnew.cpp
+  ${WDL_DIR}/lice/lice_ico.cpp
+  ${WDL_DIR}/lice/lice_bmp.cpp
   ${WDL_DIR}/jnetlib/asyncdns.cpp
   ${WDL_DIR}/jnetlib/connection.cpp
   ${WDL_DIR}/jnetlib/httpget.cpp
@@ -185,14 +194,6 @@ else()
     ${WDL_DIR}/swell/swell-generic-gdk.cpp
     ${WDL_DIR}/swell/swell-appstub-generic.cpp
     ${WDL_DIR}/swell/swell-modstub-generic.cpp
-    ${WDL_DIR}/lice/lice.cpp
-    ${WDL_DIR}/lice/lice_arc.cpp
-    ${WDL_DIR}/lice/lice_colorspace.cpp
-    ${WDL_DIR}/lice/lice_line.cpp
-    ${WDL_DIR}/lice/lice_text.cpp
-    ${WDL_DIR}/lice/lice_textnew.cpp
-    ${WDL_DIR}/lice/lice_ico.cpp
-    ${WDL_DIR}/lice/lice_bmp.cpp
   )
   list(APPEND NJD_PLATFORM_SOURCES ${SWELL_SOURCES})
   list(APPEND NJD_DEFINES SWELL_TARGET_GDK=3 SWELL_LICE_GDI SWELL_FREETYPE SWELL_FONTCONFIG _FILE_OFFSET_BITS=64)
