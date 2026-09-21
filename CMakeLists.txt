@@ -168,7 +168,8 @@ elseif(APPLE)
   )
   list(APPEND NJD_PLATFORM_SOURCES ${SWELL_SOURCES})
   list(APPEND NJD_PLATFORM_LIBS "-framework Cocoa" "-framework Carbon" "-framework CoreAudio"
-    "-framework AudioToolbox" "-framework CoreFoundation" "-framework Metal" "-framework QuartzCore")
+    "-framework AudioToolbox" "-framework CoreFoundation" "-framework Metal" "-framework QuartzCore"
+    "-framework OpenGL" "-framework IOKit") # OpenGL, IOKit: used by SWELL's Cocoa code
 
 else()
   find_package(PkgConfig REQUIRED)
@@ -246,6 +247,11 @@ if(APPLE)
   set(NJD_ICNS ${CMAKE_CURRENT_SOURCE_DIR}/packaging/macos/ninjamdesktop.icns)
   set_source_files_properties(${NJD_ICNS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   add_executable(NinjaMDesktop MACOSX_BUNDLE ${REANINJAM_SOURCES} ${HOST_SOURCES} ${NJD_PLATFORM_SOURCES} ${NJD_ICNS})
+  # SWELL's Cocoa sources predate C++11 narrowing rules (an error by default in clang) and use
+  # many AppKit APIs deprecated since; keep them building unmodified and the log readable
+  target_compile_options(NinjaMDesktop PRIVATE
+    $<$<COMPILE_LANGUAGE:CXX,OBJCXX>:-Wno-c++11-narrowing>
+    -Wno-deprecated-declarations)
   set_target_properties(NinjaMDesktop PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST ${SRC_DIR}/mac/Info.plist.in)
   # Compile the menu nib into the bundle
