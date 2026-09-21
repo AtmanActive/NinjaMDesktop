@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NinjaMDesktop
+GenericName=NINJAM Client
+Comment=Jam with musicians over the internet using NINJAM
+Exec=@NJD_EXEC_PATH@
+Icon=ninjamdesktop
+StartupWMClass=NinjaMDesktop
+Terminal=false
+Categories=AudioVideo;Audio;Music;
+Keywords=ninjam;reaninjam;jam;music;collaboration;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- NinjaMDesktop icon: an interval ring (16 beats, first beat lit) around a level meter,
+       in the colours of ReaNINJAM's beat counter -->
+  <rect x="8" y="8" width="240" height="240" rx="48" ry="48" fill="#1b2230"/>
+  <g fill="#3a4658">
+    <circle cx="128" cy="36" r="9" fill="#80ff80"/>
+    <circle cx="163.2" cy="43" r="9"/>
+    <circle cx="193.1" cy="63" r="9"/>
+    <circle cx="213" cy="92.8" r="9"/>
+    <circle cx="220" cy="128" r="9"/>
+    <circle cx="213" cy="163.2" r="9"/>
+    <circle cx="193.1" cy="193.1" r="9"/>
+    <circle cx="163.2" cy="213" r="9"/>
+    <circle cx="128" cy="220" r="9"/>
+    <circle cx="92.8" cy="213" r="9"/>
+    <circle cx="62.9" cy="193.1" r="9"/>
+    <circle cx="43" cy="163.2" r="9"/>
+    <circle cx="36" cy="128" r="9"/>
+    <circle cx="43" cy="92.8" r="9"/>
+    <circle cx="62.9" cy="62.9" r="9"/>
+    <circle cx="92.8" cy="43" r="9"/>
+  </g>
+  <g fill="#0080ff">
+    <rect x="80" y="112" width="16" height="32" rx="4"/>
+    <rect x="104" y="92" width="16" height="72" rx="4"/>
+    <rect x="128" y="76" width="16" height="104" rx="4"/>
+    <rect x="152" y="100" width="16" height="56" rx="4"/>
+    <rect x="176" y="116" width="16" height="24" rx="4"/>
+  </g>
+</svg>
