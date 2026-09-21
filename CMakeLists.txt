@@ -164,6 +164,7 @@ elseif(APPLE)
     ${WDL_DIR}/swell/swell-miscdlg.mm
     ${WDL_DIR}/swell/swell-wnd.mm
     ${WDL_DIR}/swell/swellappmain.mm
+    ${WDL_DIR}/swell/swell-appstub.mm # SWELLAPI_GetFunc(), needed by swellappmain.mm
     ${SRC_DIR}/mac/main.m
   )
   list(APPEND NJD_PLATFORM_SOURCES ${SWELL_SOURCES})
