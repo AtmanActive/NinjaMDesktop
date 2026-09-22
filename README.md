@@ -2,9 +2,12 @@
 
 Cockos [NINJAM](https://www.ninjam.com)'s ReaNINJAM client, packaged as a standalone desktop app for Linux, Windows and macOS.
 
-ReaNINJAM is the NINJAM client that ships with REAPER as a VST plug-in. NinjaMDesktop compiles
-ReaNINJAM's own source files **unmodified** from the official Cockos repository and replaces only
+ReaNINJAM is the NINJAM client that ships with [REAPER](https://reaper.fm) as a VST plug-in. 
+This project compiles ReaNINJAM's own source files **unmodified** from the official Cockos repository and replaces only
 the VST wrapper (`vstframe.cpp`) with a small host that supplies what REAPER normally provides.
+
+## How to use
+Download the package for your platform from the [releases](https://github.com/AtmanActive/NinjaMDesktop/releases) and install/unpack/run it.
 
 ## How it is put together
 
