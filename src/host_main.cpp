@@ -298,6 +298,11 @@ static LRESULT WINAPI MainWndSubclassProc(HWND hwnd, UINT msg, WPARAM wParam, LP
       }
       if (Theme_OnTimer(wParam)) return 0;
     break;
+#ifdef _WIN32
+    case WM_SETTINGCHANGE: // e.g. dark mode switched in Windows' settings
+      Theme_OnSystemChange();
+    break;
+#endif
     case WM_INITMENUPOPUP:
       {
         // ReaNINJAM greys "Audio configuration" while connected (a leftover from the old
@@ -384,7 +389,10 @@ static void AdaptMainWindow(HWND hwnd)
         sub.hSubMenu = theme;
         sub.dwTypeData = (char *)"&Theme";
         InsertMenuItem(file, GetMenuItemCount(file), TRUE, &sub);
+      }
 
+      if (Zoom_Supported())
+      {
         HMENU zoom = CreatePopupMenu();
         for (int x = 0; x < NUM_ZOOM_LEVELS; x++)
         {
@@ -396,6 +404,7 @@ static void AdaptMainWindow(HWND hwnd)
           zi.dwTypeData = buf;
           InsertMenuItem(zoom, x, TRUE, &zi);
         }
+        MENUITEMINFO sub = { sizeof(sub), MIIM_TYPE | MIIM_SUBMENU, MFT_STRING, };
         sub.hSubMenu = zoom;
         sub.dwTypeData = (char *)"&Zoom";
         InsertMenuItem(file, GetMenuItemCount(file), TRUE, &sub);
@@ -473,6 +482,7 @@ INT_PTR SWELLAppMain(int msg, INT_PTR parm1, INT_PTR parm2)
 #endif
         break;
       }
+      License_Install();
       AdaptMainWindow(g_hwnd);
       StartAudio();
     break;

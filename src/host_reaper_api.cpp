@@ -90,7 +90,7 @@ BOOL WINAPI NJD_CoolSB_SetMinThumbSize(HWND hwnd, UINT wBar, UINT size);
 
 // hooks coolscroll expects the application to provide
 void *NJD_CoolSB_GetIconThemePointer(const char *name) { return NULL; } // NULL: default look
-int CoolSB_GetSysColor(HWND hwnd, int val) { return GetSysColor(val); }
+int CoolSB_GetSysColor(HWND hwnd, int val) { return (int)Host_GetSysColor(val); }
 };
 
 // ---------------------------------------------------------------------------

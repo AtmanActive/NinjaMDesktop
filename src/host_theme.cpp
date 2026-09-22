@@ -14,7 +14,8 @@
 // Zoom (Linux) uses SWELL's UI scale, which sizes dialogs, fonts, menus and scrollbars
 // when windows are created, so a new zoom level applies after a restart.
 //
-// Windows/macOS: not implemented yet; the menus are not shown there.
+// Windows: light/dark through host_theme_win.cpp (Windows 10 1809 and later); zoom is not
+// implemented there. macOS: not implemented yet. Menus for missing features are not shown.
 
 #include <stdio.h>
 #include <string.h>
@@ -202,13 +203,50 @@ static void init_zoom()
 
 static int host_GetWindowDPIScaling(HWND hwnd) { return SWELL_GetScaling256(); }
 
+static void platform_init()
+{
+  init_zoom();
+  // lets ReaNINJAM store its panel sizes independent of the zoom level, as it does in REAPER
+  extern int (*GetWindowDPIScaling)(HWND hwnd);
+  GetWindowDPIScaling = host_GetWindowDPIScaling;
+}
+
 bool Theme_Supported() { return true; }
+bool Zoom_Supported() { return true; }
+COLORREF Host_GetSysColor(int idx) { return GetSysColor(idx); } // SWELL's follow the loaded theme
+
+#elif defined(_WIN32)
+
+// host_theme_win.cpp
+bool WinTheme_Init(); // false if this version of Windows has no dark mode
+bool WinTheme_SystemPrefersDark();
+bool WinTheme_HighContrast();
+void WinTheme_Apply(bool dark);
+
+static bool s_win_themes;
+
+static void apply(bool force)
+{
+  if (!s_win_themes) return;
+  // with a high contrast theme, leave the user's system colors alone
+  const bool dark = !WinTheme_HighContrast() &&
+    (s_mode == THEME_DARK || (s_mode == THEME_SYSTEM && WinTheme_SystemPrefersDark()));
+  if (!force && s_applied == (int)dark) return;
+  s_applied = dark;
+  WinTheme_Apply(dark);
+}
+
+static void platform_init() { s_win_themes = WinTheme_Init(); }
+bool Theme_Supported() { return s_win_themes; }
+bool Zoom_Supported() { return false; }
 
 #else
 
 static void apply(bool force) { }
-static void init_zoom() { }
+static void platform_init() { }
 bool Theme_Supported() { return false; }
+bool Zoom_Supported() { return false; }
+COLORREF Host_GetSysColor(int idx) { return GetSysColor(idx); }
 
 #endif
 
@@ -219,21 +257,14 @@ void Theme_Init()
   s_zoom = GetPrivateProfileInt(THEME_SEC, "zoom", 0, theme_ini_path());
   if (s_zoom != 0 && (s_zoom < 50 || s_zoom > 300)) s_zoom = 0;
 
-  init_zoom();
-#ifdef NJD_HAVE_THEMES
-  // lets ReaNINJAM store its panel sizes independent of the zoom level, as it does in REAPER
-  extern int (*GetWindowDPIScaling)(HWND hwnd);
-  GetWindowDPIScaling = host_GetWindowDPIScaling;
-#endif
+  platform_init();
   apply(true);
 }
 
 void Theme_AttachWindow(HWND hwnd)
 {
   s_hwnd = hwnd;
-#ifdef NJD_HAVE_THEMES
-  SetTimer(hwnd, THEME_POLL_TIMER, THEME_POLL_MS, NULL);
-#endif
+  if (Theme_Supported()) SetTimer(hwnd, THEME_POLL_TIMER, THEME_POLL_MS, NULL);
 }
 
 bool Theme_OnTimer(WPARAM id)
@@ -241,6 +272,11 @@ bool Theme_OnTimer(WPARAM id)
   if (id != THEME_POLL_TIMER) return false;
   if (s_mode == THEME_SYSTEM) apply(false);
   return true;
+}
+
+void Theme_OnSystemChange()
+{
+  apply(false); // system dark mode or high contrast changed
 }
 
 int Theme_GetMode() { return s_mode; }

@@ -141,10 +141,10 @@ static void fader_paint(HWND hwnd, FaderState *s)
   if (!dc) return;
   RECT r;
   GetClientRect(hwnd, &r);
-  const COLORREF face = GetSysColor(COLOR_3DFACE);
-  const COLORREF shadow = GetSysColor(COLOR_3DSHADOW);
-  const COLORREF hilite = GetSysColor(COLOR_3DHILIGHT);
-  const COLORREF dark = GetSysColor(COLOR_3DDKSHADOW);
+  const COLORREF face = Host_GetSysColor(COLOR_3DFACE);
+  const COLORREF shadow = Host_GetSysColor(COLOR_3DSHADOW);
+  const COLORREF hilite = Host_GetSysColor(COLOR_3DHILIGHT);
+  const COLORREF dark = Host_GetSysColor(COLOR_3DDKSHADOW);
   fill_rect(dc, r.left, r.top, r.right, r.bottom, face);
 
   const int tw = fader_thumb_w(&r);
@@ -423,7 +423,7 @@ static void button_paint(HWND hwnd, ButtonState *s)
   if (!dc) return;
   RECT r;
   GetClientRect(hwnd, &r);
-  const COLORREF face = GetSysColor(COLOR_3DFACE);
+  const COLORREF face = Host_GetSysColor(COLOR_3DFACE);
   fill_rect(dc, r.left, r.top, r.right, r.bottom, face);
 
   int icon = s->icon;
@@ -444,14 +444,14 @@ static void button_paint(HWND hwnd, ButtonState *s)
   }
   else
   {
-    bg = mix_color(face, GetSysColor(COLOR_3DHILIGHT), 96);
-    fg = GetSysColor(COLOR_BTNTEXT);
+    bg = mix_color(face, Host_GetSysColor(COLOR_3DHILIGHT), 96);
+    fg = Host_GetSysColor(COLOR_BTNTEXT);
   }
   if (s->pressed && s->inside) bg = mix_color(bg, RGB(0, 0, 0), 48);
 
   RECT box = r;
   fill_rect(dc, box.left, box.top, box.right, box.bottom, bg);
-  frame_rect(dc, &box, GetFocus() == hwnd ? RGB(40, 120, 220) : GetSysColor(COLOR_3DDKSHADOW));
+  frame_rect(dc, &box, GetFocus() == hwnd ? RGB(40, 120, 220) : Host_GetSysColor(COLOR_3DDKSHADOW));
 
   static HFONT s_font;
   static int s_font_h;

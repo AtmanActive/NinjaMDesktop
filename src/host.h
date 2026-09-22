@@ -58,15 +58,21 @@ const char *Audio_GetStatusText();
 // host_audioconfig.cpp
 void AudioConfig_Show(HWND parent);
 
-// host_theme.cpp
+// host_theme.cpp (Windows parts in host_theme_win.cpp)
 enum { THEME_SYSTEM = 0, THEME_LIGHT = 1, THEME_DARK = 2 };
 bool Theme_Supported();
 void Theme_Init();                  // before any window is created
 void Theme_AttachWindow(HWND hwnd); // main window: repainted on changes, polls the system setting
 bool Theme_OnTimer(WPARAM id);      // true if the timer was ours
+void Theme_OnSystemChange();        // the system's settings changed (WM_SETTINGCHANGE)
 int Theme_GetMode();
 void Theme_SetMode(int mode);
+COLORREF Host_GetSysColor(int idx); // GetSysColor() in the current theme's colors
+bool Zoom_Supported();
 int Zoom_GetPercent();             // 0 = automatic
 bool Zoom_SetPercent(int pct);     // saves the setting (applies at next start); true if it changed
+
+// host_license.cpp: remembers accepted server license agreements (after InitializeInstance())
+void License_Install();
 
 #endif

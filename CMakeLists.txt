@@ -110,6 +110,7 @@ set(HOST_SOURCES
   ${SRC_DIR}/host_paths.cpp
   ${SRC_DIR}/host_theme.cpp
   ${SRC_DIR}/host_icon.cpp
+  ${SRC_DIR}/host_license.cpp
   ${SRC_DIR}/miniaudio_impl.c
 )
 
@@ -146,10 +147,11 @@ if(WIN32)
   list(APPEND NJD_PLATFORM_SOURCES
     ${REANINJAM_DIR}/res.rc
     ${SRC_DIR}/host.rc
+    ${SRC_DIR}/host_theme_win.cpp
   )
   list(APPEND NJD_INCLUDE_DIRS ${SRC_DIR}/compat/win32 ${CMAKE_CURRENT_SOURCE_DIR}/packaging/windows) # rc: icon, manifest
   list(APPEND NJD_DEFINES _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _WINSOCK_DEPRECATED_NO_WARNINGS)
-  list(APPEND NJD_PLATFORM_LIBS comctl32 ws2_32 ole32 shell32 comdlg32 gdi32 user32 advapi32 winmm uuid)
+  list(APPEND NJD_PLATFORM_LIBS comctl32 ws2_32 ole32 shell32 comdlg32 gdi32 user32 advapi32 winmm uuid uxtheme dwmapi)
 
 elseif(APPLE)
   enable_language(OBJC OBJCXX)

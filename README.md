@@ -23,6 +23,8 @@ The host layer (`src/`) provides:
 - `host_controls.cpp`: REAPER's custom controls used by ReaNINJAM's dialogs (faders, VU meters, mute/solo buttons)
 - `host_audio.cpp`, `host_audioconfig.cpp`: audio device handling and the *Audio configuration* dialog
 - `host_vorbis.cpp`: the Vorbis encoder/decoder REAPER normally lends to ReaNINJAM
+- `host_theme.cpp`, `host_theme_win.cpp`: light/dark theme and zoom
+- `host_license.cpp`: remembers accepted server license agreements
 
 ## Differences from ReaNINJAM inside REAPER
 
@@ -31,6 +33,8 @@ The host layer (`src/`) provides:
 - Local channels set to *Session mode* don't transmit, and remote session-mode channels don't play, because there is no project timeline to sync them to. Normal and *Voice chat* channels work as usual.
 - Settings are stored in `reaninjam.ini` in the per-user config folder: `~/.config/NinjaMDesktop` (Linux), `%APPDATA%\NinjaMDesktop` (Windows), `~/Library/Application Support/NinjaMDesktop` (macOS). If a `reaninjam.ini` exists next to the executable, that one is used instead (portable mode, a ReaNINJAM feature).
 - Session recordings (File > Preferences) default to `NINJAMsessions` in your Documents folder.
+- **File > Theme** follows the system's light/dark setting, or forces light or dark (Linux; Windows 10 1809 and later). **File > Zoom** sets the UI size (Linux).
+- A server's license agreement is shown only the first time you connect, and again if the server changes its license text. Accepted licenses are listed in the `[ninjamdesktop_licenses]` section of `reaninjam.ini`; delete an entry to see that server's license again.
 
 ## Building
 
